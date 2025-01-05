@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bellyDisplay uppercase text-center">{{ category.title }}</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
+            {% for article in category.articles %}
+                <a href="{{ path('app_article', {slug: category.slug, articleSlug: article.slug}) }}">{{ article.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

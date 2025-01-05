@@ -1,0 +1,14 @@
+<nav class="mb-5">
+    <ul class="flex flex-wrap">
+        <li class="inline underline"><a href="{{ path('app_index') }}">Accueil</a></li>
+{#        <li class="inline ml-2 underline"><a href="{{ path('app_product_index') }}">Produit</a></li>#}
+{#        <li class="inline ml-2 underline"><a href="{{ path('app_product_category_index') }}">Category Produit</a></li>#}
+        {% if is_granted('ROLE_USER') %}
+            <li class="inline ml-auto underline"><a href="#">{{ app.user.email }}</a></li>
+{#            <li class="inline ml-2 underline"><a href="{{ path('app_order_show') }}">Panier</a></li>#}
+            <li class="inline ml-2 underline"><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+        {% else %}
+            <li class="inline ml-auto underline"><a href="{{ path('app_login') }}">Connexion</a></li>
+        {% endif %}
+    </ul>
+</nav>

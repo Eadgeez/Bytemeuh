@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Réinitialisation de mot de passe
+{% endblock %}
+
+{% block body %}
+    {{ form_start(resetForm) }}
+        <h1 class="text-3xl text-center mb-5">
+            Réinitialisation de mot de passe
+        </h1>
+        <table class="border-separate table w-full border-spacing-2 mx-auto">
+            <tbody>
+                <tr>
+                    <td colspan="1">
+                        {{ form_label(resetForm.plainPassword.first) }}
+                    </td>
+                    <td colspan="1">
+                        {{ form_widget(resetForm.plainPassword.first) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        {{ form_label(resetForm.plainPassword.second) }}
+                    </td>
+                    <td colspan="1">
+                        {{ form_widget(resetForm.plainPassword.second) }}
+                    </td>
+                </tr>
+                {% if form_errors(resetForm.plainPassword.first) %}
+                    <tr>
+                        <td colspan="2" class="text-red-600 w-min text-sm">
+                            {{ form_errors(resetForm.plainPassword.first) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if form_errors(resetForm.plainPassword.second) %}
+                    <tr>
+                        <td colspan="2" class="text-red-600 w-min text-sm">
+                            {{ form_errors(resetForm.plainPassword.second) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                   <td colspan="2" class="w-min text-xs">
+                       {{ form_help(resetForm.plainPassword) }}
+                   </td>
+                </tr>
+            </tbody>
+        </table>
+
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="text-red-600" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <button class="text-center w-fit mx-auto block py-2 px-3 border rounded-sm mt-5" type="submit">Réinitialiser</button>
+    {{ form_end(resetForm) }}
+{% endblock %}

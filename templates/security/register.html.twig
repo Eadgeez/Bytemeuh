@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}
+    {{ form_start(registrationForm) }}
+        <h1 class="text-3xl text-center mb-5">
+            Inscription
+        </h1>
+        <table class="border-separate table w-full border-spacing-2 mx-auto">
+            <tbody>
+                <tr>
+                    <td colspan="1">
+                        {{ form_label(registrationForm.email) }}
+                    </td>
+                    <td colspan="1">
+                        {{ form_widget(registrationForm.email) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        {{ form_label(registrationForm.plainPassword.first) }}
+                    </td>
+                    <td colspan="1">
+                        {{ form_widget(registrationForm.plainPassword.first) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        {{ form_label(registrationForm.plainPassword.second) }}
+                    </td>
+                    <td colspan="1">
+                        {{ form_widget(registrationForm.plainPassword.second) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        {{ form_label(registrationForm.agreeTerms) }}
+                    </td>
+                    <td colspan="1">
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                    </td>
+                </tr>
+                {% if form_errors(registrationForm.email) %}
+                    <tr>
+                        <td colspan="2" class="text-red-600 w-min text-sm">
+                            {{ form_errors(registrationForm.email) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if form_errors(registrationForm.plainPassword.first) %}
+                    <tr>
+                        <td colspan="2" class="text-red-600 w-min text-sm">
+                            {{ form_errors(registrationForm.plainPassword.first) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if form_errors(registrationForm.plainPassword.second) %}
+                    <tr>
+                        <td colspan="2" class="text-red-600 w-min text-sm">
+                            {{ form_errors(registrationForm.plainPassword.second) }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td colspan="2" class="w-min text-xs">
+                        {{ form_help(registrationForm.plainPassword) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="text-red-600" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+
+        <button class="text-center w-fit mx-auto block py-2 px-3 border rounded-sm mt-5" type="submit">
+            S'inscrire
+        </button>
+    {{ form_end(registrationForm) }}
+{% endblock %}
