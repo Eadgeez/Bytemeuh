@@ -15,6 +15,11 @@ class Category
 {
     use TimestampableTraits\Timestampable;
 
+    public function __toString(): string
+    {
+        return $this->getTitle();
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

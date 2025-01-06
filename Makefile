@@ -158,3 +158,6 @@ cmd: ## Open a bash session in the php (p) / node (n) / postgres (d) container
 
 clear: ## Clearing ignored files
 	sudo rm -rf var public/build .env docker-compose.override.yaml .phpunit.result.cache
+
+clear-dependency: ## Clearing ignored files and dependencies
+	sudo rm -rf var public/build .env docker-compose.override.yaml .phpunit.result.cache vendor node_modules

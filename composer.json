@@ -34,7 +34,8 @@
         "symfonycasts/reset-password-bundle": "^1.23.1",
         "symfonycasts/verify-email-bundle": "^1.17.3",
         "twig/extra-bundle": "^2.12|^3.18",
-        "twig/twig": "3.*"
+        "twig/twig": "3.*",
+        "vich/uploader-bundle": "^2.5"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.2",
