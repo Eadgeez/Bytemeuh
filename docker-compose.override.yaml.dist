@@ -18,7 +18,3 @@ services:
     image: dockage/mailcatcher
     ports:
       - "8081:1080"
-
-  mercure:
-    ports:
-      - "8090:80"
