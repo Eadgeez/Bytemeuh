@@ -19,18 +19,20 @@ class CategoryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Category')
+            ->setEntityLabelInSingular('Catégorie')
             ->setEntityLabelInPlural('Categories')
             ->setSearchFields(['id', 'title'])
-            ->setDefaultSort(['id' => 'DESC']);
+            ->setDefaultSort(['id' => 'DESC'])
+            ->renderContentMaximized()
+            ->setPaginatorPageSize(10);
     }
 
-//    public function configureFields(string $pageName): iterable
-//    {
-//        return [
-//            IdField::new('id'),
-//            TextField::new('title'),
-//            TextEditorField::new('description'),
-//        ];
-//    }
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            IdField::new('id')->hideOnForm(),
+            TextField::new('title', 'Titre'),
+            TextField::new('slug')->hideOnForm(),
+        ];
+    }
 }

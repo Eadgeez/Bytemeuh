@@ -17,6 +17,8 @@
 .env
 .env.local
 docker-compose.override.yaml
+public/images/*
+
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
