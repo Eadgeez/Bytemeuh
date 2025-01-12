@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +13,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
     {
         $categories = $categoryRepository->findAll();
+        $articles = $articleRepository->findBy([], ['id' => 'DESC'], 5);
 
         return $this->render('index.html.twig', [
             'categories' => $categories,
+            'articles' => $articles,
         ]);
     }
 

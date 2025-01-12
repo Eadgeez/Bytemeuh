@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --gunmetal : #22313f;
+  --midnight-green: #074b57;
+  --caribbean-current: #0d7378;
+  --cream: #fffed6;
+  --forest-green: #299600;
+  --aerospace-orange: #ff5000;
+
+  --primary-color: var(--gunmetal);
+  --secondary-color: var(--cream);
+  --tertiary-color: var(--caribbean-current);
+  --tertiary-hover-color: var(--midnight-green);
+  --primary-accent-color: var(--aerospace-orange);
+  --secondary-accent-color: var(--forest-green);
+}

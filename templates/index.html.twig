@@ -1,11 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block metadescription %}Bienvenue sur Bytemeuh, votre site pour découvrir des articles captivants et apprendre qui nous sommes.{% endblock %}
+{% block metakeywords %}Bytemeuh, articles, catégories, informations, qui sommes-nous{% endblock %}
+{% block title %}Bytemeuh - Accueil{% endblock %}
 
 {% block body %}
-    <div class="flex flex-col gap-5">
-        {% for category in categories %}
-            <a href="{{ path('app_category', {slug: category.slug}) }}">{{ category.title }}</a>
-        {% endfor %}
-    </div>
+<main class="container mx-auto my-8">
+    <section id="welcome">
+        <div class="flex items-center">
+            <img src="images/bytemeuh.webp" alt="Logo Bytemeuh" class="w-60">
+            <div class="mx-6">
+                <h1 class="text-3xl font-bold mb-8">Bienvenue sur Bytemeuh !</h1>
+                <p>Sur <strong>Bytemeuh</strong>, retrouvez des actualités tech qui font le buzz : des innovations révolutionnaires, des tests de produits tech, et des tendances digitales.</p>
+                <p>Que vous soyez geek, développeur ou simple amateur, <a href="bytemeuh.com" class="text-tertiary-color hover:text-tertiary-hover-color"><strong>Bytemeuh.com</strong></a> est là pour vous informer avec humour et expertise.</p>
+            </div>
+        </div>
+    </section>
+    <section id="last-articles">
+        <h2 class="text-3xl font-bold text-center mb-8">Consulter nos derniers articles vachement tech !</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for article in articles %}
+                <div class="bg-white shadow-md rounded overflow-hidden">
+                    <img src="test" alt="{{ article.imageName }}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h2 class="text-xl font-semibold mb-2">{{ article.title }}</h2>
+                        <p class="text-gray-700 mb-4">{{ article.content }}</p>
+                        <a href="/articles/{{ article.slug }}" class="text-primary-accent-color hover:underline">Lire plus</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <form method="post" class="mt-10 mx-auto w-fit border rounded-lg p-5">
+    <form method="post" class="mt-auto mx-auto w-fit border rounded-lg p-5 bg-primary-color text-secondary-color">
         {% if app.user %}
             <div class="mb-3">
 {#                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>#}
@@ -16,7 +16,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <label for="username">Email :</label>
+                        <label for="username">Email</label>
                     </td>
                     <td>
                         <input
@@ -24,7 +24,7 @@
                             value="{{ last_username }}"
                             name="_username"
                             id="username"
-                            class="border"
+                            class="border bg-secondary-color"
                             autocomplete="email"
                             required
                             autofocus
@@ -33,14 +33,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="password">Mot de passe :</label>
+                        <label for="password">Mot de passe</label>
                     </td>
                     <td>
                         <input
                             type="password"
                             name="_password"
                             id="password"
-                            class="border"
+                            class="border bg-secondary-color"
                             autocomplete="current-password"
                             required
                         >
@@ -48,7 +48,7 @@
                 </tr>
             </tbody>
         </table>
-        <a class="text-sm text-blue-500 text-center block" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+        <a class="text-sm text-tertiary-color text-center block mt-3" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
         >
@@ -64,13 +64,13 @@
         #}
 
         {% if error %}
-            <div class="text-red-600 text-center">
+            <div class="text-primary-accent-color text-center">
                 {{ error.message }}
 {#                {{ error.messageKey|trans(error.messageData, 'security') }}#}
             </div>
         {% endif %}
 
-        <button class="text-center w-fit mx-auto block py-2 px-3 border rounded-sm mt-5" type="submit">
+        <button class="text-center w-fit mx-auto block bg-tertiary-color hover:bg-tertiary-hover-color text-secondary-color px-4 py-2 rounded mt-5" type="submit">
             Se connecter
         </button>
     </form>
