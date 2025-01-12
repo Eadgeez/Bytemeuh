@@ -21,11 +21,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for article in articles %}
                 <div class="bg-white shadow-md rounded overflow-hidden">
-                    <img src="test" alt="{{ article.imageName }}" class="w-full h-48 object-cover">
+                    <img src="/images/{{ article.imageName }}" alt="{{ article.imageName }}" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h2 class="text-xl font-semibold mb-2">{{ article.title }}</h2>
                         <p class="text-gray-700 mb-4">{{ article.content }}</p>
-                        <a href="/articles/{{ article.slug }}" class="text-primary-accent-color hover:underline">Lire plus</a>
+                        <a href="{{ path('app_article', {slug: article.category.slug, articleSlug: article.slug}) }}" class="text-primary-accent-color hover:underline">Lire plus</a>
                     </div>
                 </div>
             {% endfor %}
