@@ -7,7 +7,7 @@
         <meta name="description" content="{% block metadescription %}Bytemeuh{% endblock %}">
         <meta name="keywords" content="{% block metakeywords %}Bytemeuh{% endblock %}">
         <title>{% block title %}Bytemeuh{% endblock %}</title>
-        <link rel="icon" href="images/favicon.ico">
+        <link rel="icon" href="{{ asset('images/favicon.ico') }}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}

@@ -24,6 +24,16 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    #[Route('/articles', name: 'app_articles')]
+    public function articles(ArticleRepository $articleRepository): Response
+    {
+        $articles = $articleRepository->findAll();
+
+        return $this->render('articles.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
     #[Route('/{slug}', name: 'app_category')]
     public function category(string $slug, CategoryRepository $categoryRepository): Response
     {
