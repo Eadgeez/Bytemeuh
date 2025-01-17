@@ -28,6 +28,9 @@
         </nav>
         <div>
             {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin" class="bg-tertiary-color hover:bg-tertiary-hover-color text-secondary-color px-4 py-2 rounded">Admin</a>
+                {% endif %}
                 <a href="/mon-compte" class="bg-tertiary-color hover:bg-tertiary-hover-color text-secondary-color px-4 py-2 rounded">Mon compte</a>
                 <a href="{{ path('app_logout') }}" class="bg-tertiary-color hover:bg-tertiary-hover-color text-secondary-color px-4 py-2 rounded">Déconnexion</a>
             {% else %}

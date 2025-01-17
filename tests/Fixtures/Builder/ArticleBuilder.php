@@ -7,12 +7,13 @@ namespace App\Tests\Fixtures\Builder;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Tests\Fixtures\Factory\ArticleFactory;
-use App\Tests\Fixtures\Factory\CategoryFactory;
 
 class ArticleBuilder implements BuilderInterface
 {
     private ?string $title = null;
     private ?string $content = null;
+    private ?string $shortDescription = null;
+    private ?string $imageURL = null;
     private ?Category $category = null;
 
     public function withContent(string $content): self
@@ -37,11 +38,27 @@ class ArticleBuilder implements BuilderInterface
         return $this;
     }
 
+    public function withShortDescription(string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function withImageURL(string $imageURL): self
+    {
+        $this->imageURL = $imageURL;
+
+        return $this;
+    }
+
     public function build(bool $persist = true): Article
     {
         $user = ArticleFactory::createOne(array_filter([
             'title' => $this->title,
             'content' => $this->content,
+            'shortDescription' => $this->shortDescription,
+            'imageURL' => $this->imageURL,
             'category' => $this->category,
         ]));
 
