@@ -14,9 +14,10 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-
-        for ($i = 0; $i < 25; ++$i) {
-            ThereIs::anArticle()->build();
+        foreach (CategoryFactory::all() as $category) {
+            for ($i = 0; $i < 10; ++$i) {
+                ThereIs::anArticle()->withCategory($category)->build();
+            }
         }
     }
 

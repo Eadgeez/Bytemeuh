@@ -26,10 +26,9 @@ final class ArticleFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'title' => self::faker()->words(self::faker()->numberBetween(1, 5), true),
+            'title' => 'ART'.self::faker()->words(self::faker()->numberBetween(1, 5), true),
             'content' => self::faker()->text(70),
             'shortDescription' => self::faker()->text(300),
-//            'imageURL' => 'https://picsum.photos/id/237/900/'.self::faker()->randomNumber(3, true),
             'imageURL' => ThereIs::anImagePath(),
             'category' => CategoryFactory::randomOrCreate(),
         ];

@@ -1,0 +1,17 @@
+{% if app.request.get('_route') != 'app_index' %}
+<div id="breadcrumbs" class="bottom-0 left-0 w-full bg-tertiary-color text-secondary-color p-2 mb-6">
+    <ul class="list-none flex">
+            <li class="after:content-['>'] after:ml-1"><a href="{{ path('app_index') }}">Bytemeuh</a></li>
+        {% if app.request.get('_route') == 'app_categories' %}
+            <li class="after:content-['>'] after:ml-1"><a href="{{ path('app_category')}}">categories</a></li>
+        {% elseif app.request.get('_route') == 'app_articles' %}
+            <li class="after:content-['>'] after:ml-1 mx-1"><a href="{{ path('app_articles')}}">articles</a></li>
+        {% elseif app.request.get('_route') == 'app_article' %}
+            <li class="after:content-['>'] after:ml-1 mx-1"><a href="{{ path('app_category', {slug: article.category.slug}) }}">{{ article.category }}</a></li>
+            <li class="mx-1"><a href="{{ path('app_article', {slug: article.category.slug, articleSlug: article.slug}) }}">{{ article.title }}</a></li>
+        {% elseif app.request.get('_route') == 'app_category' %}
+            <li class="after:content-['>'] after:ml-1 mx-1"><a href="{{ path('app_category', {slug: category.slug}) }}">{{ category.title }}</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}

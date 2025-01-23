@@ -15,10 +15,13 @@ class CategoryBuilder implements BuilderInterface
     private ?string $title = null;
 
     private Collection $articles;
+    private ?Category $parentCategory = null;
+    private Collection $childCatergories;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->childCatergories = new ArrayCollection();
     }
 
     public function withTitle(string $title): self
@@ -49,11 +52,41 @@ class CategoryBuilder implements BuilderInterface
         return $this;
     }
 
+    public function withParentCategory(Category $parentCategory): self
+    {
+        $this->parentCategory = $parentCategory;
+
+        return $this;
+    }
+
+    public function withChildCatergories(Collection $childCatergories): self
+    {
+        $this->childCatergories = $childCatergories;
+
+        return $this;
+    }
+
+    public function addChildCatergory(Category $childCatergory): self
+    {
+        $this->childCatergories->add($childCatergory);
+
+        return $this;
+    }
+
+    public function removeChildCatergory(Category $childCatergory): self
+    {
+        $this->childCatergories->removeElement($childCatergory);
+
+        return $this;
+    }
+
     public function build(bool $persist = true): Category
     {
         $user = CategoryFactory::createOne(array_filter([
             'title' => $this->title,
             'articles' => $this->articles->toArray(),
+            'parentCategory' => $this->parentCategory,
+            'childCatergories' => $this->childCatergories->toArray(),
         ]));
 
         if ($persist) {
