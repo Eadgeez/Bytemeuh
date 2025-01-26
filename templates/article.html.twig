@@ -4,9 +4,16 @@
 
 {% block body %}
     <div class="container mx-auto">
-        <h1 class="text-3xl font-bellyDisplay uppercase text-center">{{ article.title }}</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-            {{ article.content|raw }}
+        <h1 class="text-3xl font-bellyDisplay uppercase text-center mb-8">{{ article.title }}</h1>
+        <div>
+            {% if article.imageName ?? NULL %}
+                <img src="{{ asset('images/' ~ article.imageName) }}" alt="{{ article.imageName }}" class="w-full h-48 object-cover mb-8">
+            {% else %}
+                <img src="{{ article.imageURL }}" alt="Image par défaut" class="w-full h-48 object-cover mb-8">
+            {% endif %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
+                {{ article.content|raw }}
+            </div>
         </div>
     </div>
 {% endblock %}
