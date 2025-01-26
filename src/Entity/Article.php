@@ -6,7 +6,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Traits as TimestampableTraits;
+use Gedmo\Timestampable\Traits\TimestampableEntity as Timestampable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 class Article
 {
-    use TimestampableTraits\Timestampable;
+    use Timestampable;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -25,10 +25,6 @@ class Article
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
-
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Gedmo\Slug(fields: ['title'])]
@@ -43,6 +39,14 @@ class Article
     #[ORM\Column(nullable: true)]
     private ?int $imageSize = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageURL = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $shortDescription = null;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -69,18 +73,6 @@ class Article
     public function setContent(string $content): static
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -113,5 +105,41 @@ class Article
     public function setImageSize(?int $imageSize): void
     {
         $this->imageSize = $imageSize;
+    }
+
+    public function getImageURL(): ?string
+    {
+        return $this->imageURL;
+    }
+
+    public function setImageURL(?string $imageURL): static
+    {
+        $this->imageURL = $imageURL;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(string $shortDescription): static
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

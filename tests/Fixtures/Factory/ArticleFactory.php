@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Fixtures\Factory;
 
 use App\Entity\Article;
+use App\Tests\Fixtures\ThereIs;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -25,8 +26,10 @@ final class ArticleFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'title' => self::faker()->words(self::faker()->numberBetween(1, 5), true),
-            'content' => self::faker()->text(),
+            'title' => 'ART'.self::faker()->words(self::faker()->numberBetween(1, 5), true),
+            'content' => self::faker()->text(70),
+            'shortDescription' => self::faker()->text(300),
+            'imageURL' => ThereIs::anImagePath(),
             'category' => CategoryFactory::randomOrCreate(),
         ];
     }

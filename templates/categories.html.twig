@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block metadescription %}Découvrez les différentes catégories de Bytemeuh et explorez nos contenus tech vachement intéressants !{% endblock %}
+{% block metakeywords %}Bytemeuh, catégories, tech, informations, sujets, exploration{% endblock %}
+{% block title %}Bytemeuh - Catégories{% endblock %}
+
+{% block body %}
+    <main class="container mx-auto my-8">
+        <section id="categories-intro">
+            <div class="flex items-center">
+                <img src="{{ asset('images/bytemeuh.webp') }}" alt="Logo Bytemeuh" class="w-60">
+                <div class="mx-6">
+                    <h1 class="text-3xl font-bold mb-8">NOS CATÉGORIES</h1>
+                </div>
+            </div>
+        </section>
+        <section id="categories">
+            <h2 class="text-3xl font-bold text-center mb-8">Explorez nos différentes catégories tech !</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for category in categories %}
+                    {% include 'parts/categoryCard.html.twig' with {'category': category} %}
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

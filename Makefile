@@ -157,7 +157,31 @@ cmd: ## Open a bash session in the php (p) / node (n) / postgres (d) container
 	fi
 
 clear: ## Clearing ignored files
-	sudo rm -rf var public/build .env docker-compose.override.yaml .phpunit.result.cache
+	sudo rm -rf var public/build .env .env.local docker-compose.override.yaml .phpunit.result.cache
 
 clear-dependency: ## Clearing ignored files and dependencies
 	sudo rm -rf var public/build .env docker-compose.override.yaml .phpunit.result.cache vendor node_modules
+
+
+##- Deployment
+
+prod-env: .env ## Create .env.local file for production
+	@sed -i "s/APP_ENV=dev/APP_ENV=prod/" .env
+
+prod-docker-compose.override.yaml: docker-compose.override.prod.yaml.dist ## Create compose.override.yaml file for production
+	@cp $< docker-compose.override.yaml
+
+deploy: ## Deploy the project
+	@echo "Deploying the project..."
+	@$(MAKE) --no-print-directory down
+	@sudo docker compose down --remove-orphans
+	@$(MAKE) --no-print-directory clear
+	@$(MAKE) --no-print-directory prod-env
+	@$(MAKE) --no-print-directory prod-docker-compose.override.yaml
+	@sudo docker compose up -d --remove-orphans
+	@sudo docker compose exec php composer install
+	@sudo docker compose exec node npm install
+	@sudo docker compose exec node npm run build
+	@sudo docker compose exec php bin/console doctrine:migrations:migrate --no-interaction
+	@sudo docker compose exec php bin/console cache:clear
+	@echo "Project deployed successfully !"

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -32,6 +33,16 @@ class CategoryCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title', 'Titre'),
+            AssociationField::new('parentCategory')
+                ->autocomplete()
+                ->setLabel('Catégorie')
+                ->setSortProperty('title')
+                ->setHelp('Categorie parent de la catégorie'),
+            AssociationField::new('childCatergories')
+                ->autocomplete()
+                ->setLabel('Catégorie')
+                ->setSortProperty('title')
+                ->setHelp('Categories enfant de la catégorie'),
             TextField::new('slug')->hideOnForm(),
         ];
     }

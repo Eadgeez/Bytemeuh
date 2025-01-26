@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block metadescription %}Mentions légales de Bytemeuh.com, un site édité par Maxence MENARD pour les fans de tech et d'humour.{% endblock %}
+{% block metakeywords %}Mentions légales, Bytemeuh, Maxence MENARD, ESGI, propriété intellectuelle{% endblock %}
+{% block title %}Bytemeuh - Mentions Légales{% endblock %}
+
+{% block body %}
+    <main class="container mx-auto my-8 p-6 bg-white shadow-lg rounded-lg">
+        <div id="mentions-legales" class="space-y-8">
+            <h1 class="text-3xl font-bold text-center">
+                Mentions légales du site
+                <a href="https://bytemeuh.com" class="text-tertiary-color hover:text-tertiary-hover-color">
+                    <strong>https://bytemeuh.com</strong>
+                </a>
+            </h1>
+
+            <section class="border-b pb-4">
+                <h2 class="text-2xl font-semibold mb-2">Éditeur du site :</h2>
+                <p>
+                    <a href="https://bytemeuh.com" class="text-tertiary-color hover:text-tertiary-hover-color font-semibold">
+                        Bytemeuh.com
+                    </a> est édité par Maxence MENARD, étudiant à l'ESGI Paris.
+                </p>
+                <p>
+                    Contact :
+                    <a href="mailto:maxence@bytemeuh.com" class="text-blue-500 hover:text-blue-700">
+                        maxence@bytemeuh.com
+                    </a>
+                </p>
+            </section>
+
+            <section class="border-b pb-4">
+                <h2 class="text-2xl font-semibold mb-2">Hébergeur :</h2>
+                <p>
+                    Le site
+                    <a href="https://bytemeuh.com" class="text-tertiary-color hover:text-tertiary-hover-color font-semibold">
+                        Bytemeuh.com
+                    </a> est hébergé par Maxence MENARD sur ses propres moyens.
+                </p>
+            </section>
+
+            <section class="border-b pb-4">
+                <h2 class="text-2xl font-semibold mb-2">Propriété intellectuelle :</h2>
+                <p>
+                    Les textes et la charte graphique du site sont la propriété exclusive de Maxence MENARD.
+                    Les images sont générées par intelligence artificielle et ne sont pas sous sa propriété,
+                    sauf mention contraire.
+                </p>
+            </section>
+
+            <section class="border-b pb-4">
+                <h2 class="text-2xl font-semibold mb-2">Authenticité des actualités :</h2>
+                <p>
+                    Les actualités présentes sur le site sont réelles et récupérées de véritables sites d'actualité tech, sauf mention contraire.
+                    Toute actualité comportant la mention
+                    <span class="font-semibold italic">"généré par IA"</span>
+                    n'est pas réelle et a un simple but humoristique.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold mb-2">Contact :</h2>
+                <p>
+                    Pour toute question ou réclamation, veuillez écrire à :
+                    <a href="mailto:contact@bytemeuh.com" class="text-blue-500 hover:text-blue-700">
+                        contact@bytemeuh.com
+                    </a>
+                </p>
+            </section>
+        </div>
+    </main>
+{% endblock %}
