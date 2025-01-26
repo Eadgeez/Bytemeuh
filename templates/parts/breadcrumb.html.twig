@@ -2,7 +2,11 @@
 <div id="breadcrumbs" class="bottom-0 left-0 w-full bg-tertiary-color text-secondary-color p-2 mb-6">
     <ul class="list-none flex">
             <li class="after:content-['>'] after:ml-1"><a href="{{ path('app_index') }}">Bytemeuh</a></li>
-        {% if app.request.get('_route') == 'app_categories' %}
+        {% if app.request.get('_route') == 'app_legal_notice' %}
+            <li class="mx-1"><a href="{{ path('app_legal_notice')}}">mentions légales</a></li>
+        {% elseif app.request.get('_route') == 'app_terms_of_use' %}
+            <li class="mx-1"><a href="{{ path('app_terms_of_use')}}">conditions générales d'utilisations</a></li>
+        {% elseif app.request.get('_route') == 'app_categories' %}
             <li class="after:content-['>'] after:ml-1"><a href="{{ path('app_category')}}">categories</a></li>
         {% elseif app.request.get('_route') == 'app_articles' %}
             <li class="after:content-['>'] after:ml-1 mx-1"><a href="{{ path('app_articles')}}">articles</a></li>

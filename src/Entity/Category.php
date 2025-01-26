@@ -26,6 +26,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Gedmo\Translatable]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
@@ -60,7 +61,7 @@ class Category
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? '';
     }
 
     public function setTitle(string $title): static
@@ -72,7 +73,7 @@ class Category
 
     public function getSlug(): ?string
     {
-        return $this->slug;
+        return $this->slug ?? '';
     }
 
     public function setSlug(?string $slug): void

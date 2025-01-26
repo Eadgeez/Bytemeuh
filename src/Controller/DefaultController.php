@@ -24,6 +24,38 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    #[Route([
+        'fr'=>'/mentions-legales',
+        'en'=>'/legal-notice'
+    ],
+        name: 'app_legal_notice'
+    )]
+    public function legalNotice(): Response
+    {
+        return $this->render('legalNotice.html.twig');
+    }
+
+    #[Route([
+        'fr'=>'/conditions-utilisation',
+        'en'=>'/terms-of-use'
+    ],
+        name: 'app_terms_of_use'
+    )]
+    public function termsOfUse(): Response
+    {
+        return $this->render('termsOfUse.html.twig');
+    }
+
+    #[Route('/categories', name: 'app_categories')]
+    public function categories(CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('categories.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+
     #[Route('/articles', name: 'app_articles')]
     public function articles(ArticleRepository $articleRepository): Response
     {

@@ -7,9 +7,9 @@ stof_doctrine_extensions:
             timestampable: true
             sluggable: true
             sortable: true
+            translatable: true
 #            softdeleteable: true
 #            tree: true
-#            translatable: true
 #            loggable: true
 #            reference_integrity: true
 #            blameable: true

@@ -21,9 +21,11 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Gedmo\Translatable]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Gedmo\Translatable]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
@@ -43,6 +45,7 @@ class Article
     private ?string $imageURL = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Gedmo\Translatable]
     private ?string $shortDescription = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
@@ -55,7 +58,7 @@ class Article
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? '';
     }
 
     public function setTitle(string $title): static
@@ -67,7 +70,7 @@ class Article
 
     public function getContent(): ?string
     {
-        return $this->content;
+        return $this->content ?? '';
     }
 
     public function setContent(string $content): static
@@ -79,7 +82,7 @@ class Article
 
     public function getSlug(): ?string
     {
-        return $this->slug;
+        return $this->slug ?? '';
     }
 
     public function setSlug(?string $slug): void
@@ -121,7 +124,7 @@ class Article
 
     public function getShortDescription(): ?string
     {
-        return $this->shortDescription;
+        return $this->shortDescription ?? '';
     }
 
     public function setShortDescription(string $shortDescription): static
