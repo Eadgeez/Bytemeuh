@@ -30,6 +30,7 @@ class Article
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Gedmo\Slug(fields: ['title'])]
+    #[Gedmo\Translatable]
     public ?string $slug = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName', size: 'imageSize')]
@@ -50,6 +51,9 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?Category $category = null;
+
+    #[Gedmo\Locale]
+    private ?string $locale = null;
 
     public function getId(): ?int
     {
@@ -142,6 +146,18 @@ class Article
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }

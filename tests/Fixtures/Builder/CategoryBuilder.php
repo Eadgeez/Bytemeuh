@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Tests\Fixtures\Factory\CategoryFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Zenstruck\Foundry\Persistence\Proxy;
 
 class CategoryBuilder implements BuilderInterface
 {
@@ -16,12 +17,13 @@ class CategoryBuilder implements BuilderInterface
 
     private Collection $articles;
     private ?Category $parentCategory = null;
-    private Collection $childCatergories;
+    private Collection $childCategories;
+    private ?string $locale = null;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->childCatergories = new ArrayCollection();
+        $this->childCategories = new ArrayCollection();
     }
 
     public function withTitle(string $title): self
@@ -59,41 +61,52 @@ class CategoryBuilder implements BuilderInterface
         return $this;
     }
 
-    public function withChildCatergories(Collection $childCatergories): self
+    public function withChildCategories(Collection $childCategories): self
     {
-        $this->childCatergories = $childCatergories;
+        $this->childCategories = $childCategories;
 
         return $this;
     }
 
-    public function addChildCatergory(Category $childCatergory): self
+    public function addChildCategory(Category $childCategory): self
     {
-        $this->childCatergories->add($childCatergory);
+        $this->childCategories->add($childCategory);
 
         return $this;
     }
 
-    public function removeChildCatergory(Category $childCatergory): self
+    public function removeChildCategory(Category $childCategory): self
     {
-        $this->childCatergories->removeElement($childCatergory);
+        $this->childCategories->removeElement($childCategory);
 
         return $this;
     }
 
-    public function build(bool $persist = true): Category
+    public function withLocale(string $locale): self
     {
-        $user = CategoryFactory::createOne(array_filter([
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @return Proxy<Category>|Category
+     */
+    public function build(bool $persist = true): Proxy|Category
+    {
+        $category = CategoryFactory::createOne(array_filter([
             'title' => $this->title,
             'articles' => $this->articles->toArray(),
             'parentCategory' => $this->parentCategory,
-            'childCatergories' => $this->childCatergories->toArray(),
+            'childCategories' => $this->childCategories->toArray(),
+            'locale' => $this->locale,
         ]));
 
         if ($persist) {
-            $user->_save();
+            $category->_save();
         }
 
-        return $user;
+        return $category;
     }
 
     public function getEntityClass(): string

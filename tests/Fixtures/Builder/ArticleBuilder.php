@@ -7,6 +7,7 @@ namespace App\Tests\Fixtures\Builder;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Tests\Fixtures\Factory\ArticleFactory;
+use Zenstruck\Foundry\Persistence\Proxy;
 
 class ArticleBuilder implements BuilderInterface
 {
@@ -15,6 +16,7 @@ class ArticleBuilder implements BuilderInterface
     private ?string $shortDescription = null;
     private ?string $imageURL = null;
     private ?Category $category = null;
+    private ?string $locale = null;
 
     public function withContent(string $content): self
     {
@@ -52,7 +54,17 @@ class ArticleBuilder implements BuilderInterface
         return $this;
     }
 
-    public function build(bool $persist = true): Article
+    public function withLocale(string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @return Proxy<Article>|Article
+     */
+    public function build(bool $persist = true): Proxy|Article
     {
         $user = ArticleFactory::createOne(array_filter([
             'title' => $this->title,
@@ -60,6 +72,7 @@ class ArticleBuilder implements BuilderInterface
             'shortDescription' => $this->shortDescription,
             'imageURL' => $this->imageURL,
             'category' => $this->category,
+            'locale' => $this->locale,
         ]));
 
         if ($persist) {

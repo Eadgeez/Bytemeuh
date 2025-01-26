@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\Category;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -67,9 +72,20 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'app_category')]
-    public function category(string $slug, CategoryRepository $categoryRepository): Response
+    public function category(string $slug, EntityManagerInterface $entityManager): Response
     {
-        $category = $categoryRepository->findOneBy(['slug' => $slug]);
+        $translationsRepository = $entityManager->getRepository('Gedmo\Translatable\Entity\Translation');
+
+        /** @var Category|null $category */
+        $category = $translationsRepository->findObjectByTranslatedField('slug', $slug, Category::class);
+
+        if (null === $category) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($category->getSlug() !== $slug) {
+            return $this->redirectToRoute('app_category', ['slug' => $category->getSlug()]);
+        }
 
         return $this->render('category.html.twig', [
             'category' => $category,
@@ -77,18 +93,35 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/{slug}/{articleSlug}', name: 'app_article')]
-    public function article(string $slug, string $articleSlug, CategoryRepository $categoryRepository): Response
+    public function article(string $slug, string $articleSlug, EntityManagerInterface $entityManager): Response
     {
-        $category = $categoryRepository->findOneBy(['slug' => $slug]);
+        $translationsRepository = $entityManager->getRepository('Gedmo\Translatable\Entity\Translation');
+
+        /** @var Category|null $category */
+        $category = $translationsRepository->findObjectByTranslatedField('slug', $slug, Category::class);
 
         if (null === $category) {
             throw $this->createNotFoundException();
         }
 
-        $article = $category->getArticles()->filter(function ($article) use ($articleSlug) {
-            return $article->getSlug() === $articleSlug;
-        })->first();
+        if ($category && $category->getSlug() !== $slug) {
+            return $this->redirectToRoute('app_article', ['slug' => $category->getSlug(), 'articleSlug' => $articleSlug]);
+        }
 
+        /** @var Article|null $article */
+        $article = $translationsRepository->findObjectByTranslatedField('slug', $articleSlug, Article::class);
+
+        if (null === $article) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($article->getCategory()->getId() !== $category->getId()) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($article->getSlug() !== $articleSlug) {
+            return $this->redirectToRoute('app_article', ['slug' => $slug, 'articleSlug' => $article->getSlug()]);
+        }
 
         return $this->render('article.html.twig', [
             'category' => $category,

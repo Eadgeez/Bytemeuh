@@ -13,14 +13,27 @@ class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $category = ThereIs::aCategory()->withTitle('Category TEST - FR')->withLocale('fr')->build();
+        $category = $category->_real();
+        $category->setLocale('en')->setTitle('Category TEST - EN');
+        $manager->persist($category);
+
         for ($i = 0; $i < 5; ++$i) {
-            ThereIs::aCategory()->build();
+            $category = ThereIs::aCategory()->withLocale('fr')->build();
+            $category = $category->_real();
+            $category->setLocale('en')->setTitle(sprintf('%s - EN', $category->getTitle()));
+            $manager->persist($category);
         }
 
         foreach (CategoryFactory::all() as $category) {
             for ($i = 0; $i < 3; ++$i) {
-                ThereIs::aCategory()->withParentCategory($category)->build();
+                $childCategory = ThereIs::aCategory()->withParentCategory($category)->withLocale('fr')->build();
+                $childCategory = $childCategory->_real();
+                $childCategory->setLocale('en')->setTitle(sprintf('%s - EN', $childCategory->getTitle()));
+                $manager->persist($childCategory);
             }
         }
+
+        $manager->flush();
     }
 }

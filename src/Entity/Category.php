@@ -9,9 +9,23 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity as Timestampable;
+use Gedmo\Translatable\Translatable;
+
+/*
+ * /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
+ *
+ *
+ * COMMENTAIRE AVEC LA PUTAIN DE DOC :
+ * https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
+ *
+ *
+ * /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
+ */
+
+
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+class Category implements Translatable
 {
     use Timestampable;
 
@@ -31,6 +45,7 @@ class Category
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Gedmo\Slug(fields: ['title'])]
+    #[Gedmo\Translatable]
     public ?string $slug = null;
 
     /**
@@ -39,19 +54,21 @@ class Category
     #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'category')]
     private Collection $articles;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'childCatergories')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'childCategories')]
     private ?self $parentCategory = null;
 
     /**
      * @var Collection<int, self>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentCategory')]
-    private Collection $childCatergories;
+    private Collection $childCategories;
+    #[Gedmo\Locale]
+    private ?string $locale = null;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->childCatergories = new ArrayCollection();
+        $this->childCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,29 +143,41 @@ class Category
     /**
      * @return Collection<int, self>
      */
-    public function getChildCatergories(): Collection
+    public function getChildCategories(): Collection
     {
-        return $this->childCatergories;
+        return $this->childCategories;
     }
 
-    public function addChildCatergory(self $childCatergory): static
+    public function addChildCategory(self $childCategory): static
     {
-        if (!$this->childCatergories->contains($childCatergory)) {
-            $this->childCatergories->add($childCatergory);
-            $childCatergory->setParentCategory($this);
+        if (!$this->childCategories->contains($childCategory)) {
+            $this->childCategories->add($childCategory);
+            $childCategory->setParentCategory($this);
         }
 
         return $this;
     }
 
-    public function removeChildCatergory(self $childCatergory): static
+    public function removeChildCategory(self $childCategory): static
     {
-        if ($this->childCatergories->removeElement($childCatergory)) {
+        if ($this->childCategories->removeElement($childCategory)) {
             // set the owning side to null (unless already changed)
-            if ($childCatergory->getParentCategory() === $this) {
-                $childCatergory->setParentCategory(null);
+            if ($childCategory->getParentCategory() === $this) {
+                $childCategory->setParentCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }

@@ -31,6 +31,7 @@ final class ArticleFactory extends PersistentProxyObjectFactory
             'shortDescription' => self::faker()->text(300),
             'imageURL' => ThereIs::anImagePath(),
             'category' => CategoryFactory::randomOrCreate(),
+            'locale' => 'fr',
         ];
     }
 

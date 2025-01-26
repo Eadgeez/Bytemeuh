@@ -14,11 +14,21 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        $article = ThereIs::anArticle()->withTitle('Article TEST - FR')->withLocale('fr')->build();
+        $article = $article->_real();
+        $article->setLocale('en')->setTitle('Article TEST - EN');
+        $manager->persist($article);
+
         foreach (CategoryFactory::all() as $category) {
             for ($i = 0; $i < 10; ++$i) {
-                ThereIs::anArticle()->withCategory($category)->build();
+                $article = ThereIs::anArticle()->withCategory($category)->withLocale('fr')->build();
+                $article = $article->_real();
+                $article->setLocale('en')->setTitle(sprintf('%s - EN', $category->getTitle()));
+                $manager->persist($article);
             }
         }
+
+        $manager->flush();
     }
 
     public function getDependencies(): array
