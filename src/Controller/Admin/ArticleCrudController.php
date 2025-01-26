@@ -43,7 +43,9 @@ class ArticleCrudController extends AbstractCrudController
             ,
             TextField::new('slug')->hideOnForm(),
             TextEditorField::new('content'),
+            TextEditorField::new('shortDescription'),
             ImageField::new('imageName')->setUploadDir('public/images')->setBasePath('uploads/images')->hideOnIndex(),
+            TextField::new('imageURL'),
         ];
     }
 }
