@@ -1,8 +1,8 @@
 <div class="bg-white shadow-md rounded">
     {% if article.imageName ?? NULL %}
-        <img src="{{ asset('images/' ~ article.imageName) }}" alt="{{ article.imageName }}" class="w-full h-48 object-cover">
+        <img src="{{ asset('images/' ~ article.imageName) }}" alt="{{ article.imageAlt }}" class="w-full h-48 object-cover">
     {% else %}
-        <img src="{{ article.imageURL }}" alt="{{ article.imageName }}" class="w-full h-48 object-cover">
+        <img src="{{ article.imageURL }}" alt="{{ article.imageAlt }}" class="w-full h-48 object-cover">
     {% endif %}
     <div class="p-4">
         <h2 class="text-xl font-semibold mb-2">{{ article.title }}</h2>
