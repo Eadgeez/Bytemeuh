@@ -14,6 +14,7 @@ class ArticleBuilder implements BuilderInterface
     private ?string $content = null;
     private ?string $shortDescription = null;
     private ?string $imageURL = null;
+    private ?string $imageAlt = null;
     private ?Category $category = null;
 
     public function withContent(string $content): self
@@ -52,6 +53,13 @@ class ArticleBuilder implements BuilderInterface
         return $this;
     }
 
+    public function withImageAlt(string $imageAlt): self
+    {
+        $this->imageAlt = $imageAlt;
+
+        return $this;
+    }
+
     public function build(bool $persist = true): Article
     {
         $user = ArticleFactory::createOne(array_filter([
@@ -59,6 +67,7 @@ class ArticleBuilder implements BuilderInterface
             'content' => $this->content,
             'shortDescription' => $this->shortDescription,
             'imageURL' => $this->imageURL,
+            'imageAlt' => $this->imageAlt,
             'category' => $this->category,
         ]));
 
