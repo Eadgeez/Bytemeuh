@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
+User-agent: 2ip.ru
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.bytemeuh.com/sitemap.xml
