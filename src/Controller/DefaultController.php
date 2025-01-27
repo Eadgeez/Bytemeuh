@@ -18,7 +18,7 @@ class DefaultController extends AbstractController
     public function index(CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
     {
         $categories = $categoryRepository->findAll();
-        $articles = $articleRepository->findBy([], ['id' => 'DESC'], 5);
+        $articles = $articleRepository->findBy([], ['id' => 'DESC'], 6);
 
         return $this->render('index.html.twig', [
             'categories' => $categories,
