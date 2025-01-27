@@ -109,16 +109,6 @@ class DefaultController extends AbstractController
         $urls[] = ['loc' => $this->generateUrl('app_categories'), 'priority' => '0.80'];
         $urls[] = ['loc' => $this->generateUrl('app_articles'), 'priority' => '0.80'];
 
-        $categories = $categoryRepository->findAll();
-
-        foreach ($categories as $category) {
-            $urls[] = ['loc' => $this->generateUrl('app_category', ['slug' => $category->getSlug()]), 'priority' => '0.80'];
-
-            foreach ($category->getArticles() as $article) {
-                $urls[] = ['loc' => $this->generateUrl('app_article', ['slug' => $category->getSlug(), 'articleSlug' => $article->getSlug()]), 'priority' => '0.64'];
-            }
-        }
-
         $xml = $this->renderView('sitemap.xml.twig', [
             'urls' => $urls,
             'hostname' => $hostname
