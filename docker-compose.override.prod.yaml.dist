@@ -1,8 +1,4 @@
 services:
-  php:
-    environment:
-      - TZ=Europe/Paris
-
   web:
     ports:
       - "8000:80"
