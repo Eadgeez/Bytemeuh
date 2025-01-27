@@ -226,20 +226,10 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
-
+            $user->setVerified(true);
             $entityManager->persist($user);
             $entityManager->flush();
-
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('no-reply@candylab.com', 'Mail Bot'))
-                    ->to((string) $user->getEmail())
-//                    ->subject('Please Confirm your Email')
-                    ->subject('Veuillez confirmer votre adresse e-mail')
-                    ->htmlTemplate('security/confirmation_email.html.twig')
-            );
-
-            return $security->login($user, 'form_login', 'main');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/register.html.twig', [

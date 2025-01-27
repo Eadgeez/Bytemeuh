@@ -6,7 +6,9 @@ namespace App\Controller;
 
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -89,6 +91,41 @@ class DefaultController extends AbstractController
         return $this->render('article.html.twig', [
             'category' => $category,
             'article' => $article,
+        ]);
+    }
+
+    #[Route('/sitemap.xml', name: 'app_sitemap', priority: 1)]
+    public function sitemap(Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $manager): Response
+    {
+        $hostname = $request->getSchemeAndHttpHost();
+        $urls = [];
+
+        $urls[] = ['loc' => $this->generateUrl('app_login'), 'priority' => '1.00'];
+        $urls[] = ['loc' => $this->generateUrl('app_register'), 'priority' => '1.00'];
+        $urls[] = ['loc' => $this->generateUrl('app_index'), 'priority' => '1.00'];
+        $urls[] = ['loc' => $this->generateUrl('app_who_are_we'), 'priority' => '0.80'];
+        $urls[] = ['loc' => $this->generateUrl('app_legal_notice'), 'priority' => '0.80'];
+        $urls[] = ['loc' => $this->generateUrl('app_terms_of_use'), 'priority' => '0.80'];
+        $urls[] = ['loc' => $this->generateUrl('app_categories'), 'priority' => '0.80'];
+        $urls[] = ['loc' => $this->generateUrl('app_articles'), 'priority' => '0.80'];
+
+        $categories = $categoryRepository->findAll();
+
+        foreach ($categories as $category) {
+            $urls[] = ['loc' => $this->generateUrl('app_category', ['slug' => $category->getSlug()]), 'priority' => '0.80'];
+
+            foreach ($category->getArticles() as $article) {
+                $urls[] = ['loc' => $this->generateUrl('app_article', ['slug' => $category->getSlug(), 'articleSlug' => $article->getSlug()]), 'priority' => '0.64'];
+            }
+        }
+
+        $xml = $this->renderView('sitemap.xml.twig', [
+            'urls' => $urls,
+            'hostname' => $hostname
+        ]);
+
+        return new Response($xml, 200, [
+            'Content-Type' => 'text/xml'
         ]);
     }
 }
