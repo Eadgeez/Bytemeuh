@@ -1,3 +1,4 @@
+services:
   web:
     ports:
       - "8000:80"
