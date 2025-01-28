@@ -1,6 +1,6 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-
+    trusted_hosts:  ['^bytemeuh\.com$']
     trusted_proxies: ['127.0.0.1', '10.0.0.0/8', '192.168.1.0/24']
     trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto']
 
